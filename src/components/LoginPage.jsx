@@ -17,7 +17,6 @@ const LoginPage = React.createClass({
             <RaisedButton
               label="Войти через Google"
               className='login-button'
-              primary={true}
               onClick={this.handleLogIn}
             />
           </div>

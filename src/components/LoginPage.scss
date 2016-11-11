@@ -1,1 +1,30 @@
-@import "../styles/palette";
+@import '../styles/palette';
+@import '../styles/media';
+
+.LoginPage {
+  width: 100vw;
+  height: 100vh;
+  background-color: $primary-color;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginPage__banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media #{$phone} {
+      flex-direction: column;
+  }
+}
+
+.LoginPage__text {
+  padding: 24px;
+}
+
+.LoginPage__image {
+  max-width: 500px;
+}
