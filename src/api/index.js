@@ -15,9 +15,38 @@ export default {
           if (authResult.error) {
             return reject(authResult.error);
           }
-          console.log(authResult);
+
+          return gapi.client.load('tasks', 'v1', () => gapi.client.load('plus', 'v1', () => resolve() ) );
         }
       );
     });
-  }
+  },
+
+  listTaskLists() {
+    const request = gapi.client.tasks.tasklists.list();
+
+    return new Promise(function(resolve, reject) {
+      request.execute(resp => resolve(resp));
+    });
+  },
+
+  insertTaskList({ title }) {
+    const request = gapi.client.tasks.tasklists.insert({
+      title: title
+    });
+
+    return new Promise(function(resolve, reject) {
+      request.execute(resp => resolve(resp));
+    });
+  },
+
+  listTasks(taskListId) {
+    const request = gapi.client.tasks.tasks.list({
+      tasklist: taskListId
+    });
+
+    return new Promise(function(resolve, reject) {
+      request.execute(resp => resolve(resp));
+    });
+  },
 }

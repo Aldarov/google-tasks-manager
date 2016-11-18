@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: "./src/main.js",
+  entry: ["babel-polyfill", "./src/main.js"],
   output: {
     path: __dirname + "/public/build/",
     publicPath: "/build/",
@@ -12,6 +12,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: "babel-loader",
+        exclude: [/node_modules/,/public/]
+      },
+      {
+        test: /\.jsx$/,
+        loader: 'babel-loader',
         exclude: [/node_modules/,/public/]
       },
       {
@@ -39,11 +44,6 @@ module.exports = {
       {
         test: /\.svg$/,
         exclude: "url-loader?limit=26000&mimetype=image/svg"
-      },
-      {
-        test: /\.jsx$/,
-        loader: 'babel-loader',
-        exclude: [/node_modules/,/public/]
       },
       {
         test: /\.json$/,
