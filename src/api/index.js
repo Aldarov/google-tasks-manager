@@ -46,7 +46,9 @@ export default {
     });
 
     return new Promise(function(resolve, reject) {
-      request.execute(resp => resolve(resp));
+      request.execute(resp => {
+        resolve(resp);
+      });
     });
   },
 }

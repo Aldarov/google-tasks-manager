@@ -19,7 +19,7 @@ function getStateFromFlux() {
 
 const TasksPage = React.createClass({
   getInitialState: function() {
-    return Object.assign({}, getStateFromFlux());
+    return getStateFromFlux();
   },
 
   componentWillMount() {
@@ -27,15 +27,21 @@ const TasksPage = React.createClass({
   },
 
   componentDidMount() {
-    TaskListsStore.addChangeListener(this._onChange);
+    TasksStore.addChangeListener(this._onChange);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.params.id !== nextProps.params.id) {
+        TasksActions.loadTasks(nextProps.params.id);
+    }
   },
 
   componentWillUnmount() {
-    TaskListsStore.removeChangeListener(this._onChange);
+    TasksStore.removeChangeListener(this._onChange);
   },
 
   _onChange() {
-      this.setState(getStateFromFlux());
+    this.setState(getStateFromFlux());
   },
 
   render () {

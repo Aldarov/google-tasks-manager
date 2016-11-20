@@ -22,10 +22,11 @@ function renderApp() {
       <Route path='/' component={App} >
         <Route path='/login' component={LoginPage}/>
         <Route component={LoggedInLayout} onEnter={requireAuth}>
-          <Route path='/about' component={AboutPage}/>
-            <Route path="/lists" component={TaskListsPage}>
-              <Route path="/lists/:id" component={TasksPage}/>
-            </Route>
+          <Route path='/about' component={AboutPage} />
+
+          <Route path="/lists" component={TaskListsPage}>
+            <Route path="/lists/:id" component={TasksPage} />
+          </Route>
         </Route>
       </Route>
     </Router>,
