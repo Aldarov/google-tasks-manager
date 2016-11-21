@@ -64,6 +64,13 @@ const TasksPage = React.createClass({
     });
   },
 
+  handleTaskDelete(taskId) {
+    TasksActions.deleteTask({
+      taskListId: this.props.params.id,
+      taskId: taskId
+    });
+  },
+
   handleAddTask() {
       this.setState({ isCreatingTask : true });
   },
@@ -99,6 +106,7 @@ const TasksPage = React.createClass({
                 isCompleted={task.isCompleted}
                 onStatusChange={this.handleStatusChange.bind(null, task.id)}
                 onUpdate={this.handleTaskUpdate.bind(null, task.id)}
+                onDelete={this.handleTaskDelete.bind(null, task.id)}
               />
             )
           }

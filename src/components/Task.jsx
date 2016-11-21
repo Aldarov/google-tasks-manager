@@ -28,6 +28,10 @@ const Task = React.createClass({
     this.setState({ isEditing: true }, this.focusInput);
   },
 
+  handleDelete() {
+    this.deleteTask();
+  },
+
   handleCancel() {
     this.cancelTask();
   },
@@ -58,6 +62,12 @@ const Task = React.createClass({
 
   saveTask() {
     this.props.onUpdate({ text: this.input.value });
+
+    this.setState({ isEditing: false });
+  },
+
+  deleteTask() {
+    this.props.onDelete();
 
     this.setState({ isEditing: false });
   },
@@ -99,7 +109,7 @@ const Task = React.createClass({
 
           <IconMenu iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}>
             <MenuItem onClick={this.handleEdit} >Редактировать</MenuItem>
-            <MenuItem>Удалить</MenuItem>
+            <MenuItem onClick={this.handleDelete}>Удалить</MenuItem>
           </IconMenu>
         </div>
     );
