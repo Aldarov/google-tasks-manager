@@ -8,5 +8,9 @@ export default keyMirror({
   TASK_LISTS_CREATE_SUCCESS : null,
   TASK_LISTS_CREATE_FAIL    : null,
   TASKS_LOAD_SUCCESS        : null,
-  TASKS_LOAD_FAIL           : null
+  TASKS_LOAD_FAIL           : null,
+  TASK_UPDATE_SUCCESS          : null,
+  TASK_UPDATE_FAIL             : null,
+  TASK_CREATE_SUCCESS          : null,
+  TASK_CREATE_FAIL             : null
 });

@@ -8,6 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import Task from './Task.jsx';
+import TaskCreateModal from './TaskCreateModal.jsx';
 
 import './TasksPage.scss';
 
@@ -19,7 +20,10 @@ function getStateFromFlux() {
 
 const TasksPage = React.createClass({
   getInitialState: function() {
-    return getStateFromFlux();
+    return {
+      ...getStateFromFlux(),
+      isCreatingTask: false
+    };
   },
 
   componentWillMount() {
@@ -44,13 +48,44 @@ const TasksPage = React.createClass({
     this.setState(getStateFromFlux());
   },
 
+  handleStatusChange(taskId, { isCompleted }) {
+    TasksActions.updateTaskStatus({
+      taskListId: this.props.params.id,
+      taskId: taskId,
+      isCompleted: isCompleted
+    });
+  },
+
+  handleTaskUpdate(taskId, { text }) {
+    TasksActions.updateTask({
+      taskListId: this.props.params.id,
+      taskId: taskId,
+      text: text
+    });
+  },
+
+  handleAddTask() {
+      this.setState({ isCreatingTask : true });
+  },
+
+  handleClose() {
+      this.setState({ isCreatingTask : false });
+  },
+
+  handleTaskSubmit(task) {
+      const taskListId = this.props.params.id;
+      TasksActions.createTask({ taskListId, ...task });
+
+      this.setState({ isCreatingTask : false });
+  },
+
   render () {
     return (
       <div className="TasksPage">
         <div className="TasksPage__header">
           <h2 className="TasksPage__title">Список задач</h2>
           <div className="TasksPage__tools">
-            <IconButton>
+            <IconButton onClick={this.handleAddTask}>
               <ContentAdd/>
             </IconButton>
           </div>
@@ -62,10 +97,17 @@ const TasksPage = React.createClass({
                 key={task.id}
                 text={task.text}
                 isCompleted={task.isCompleted}
+                onStatusChange={this.handleStatusChange.bind(null, task.id)}
+                onUpdate={this.handleTaskUpdate.bind(null, task.id)}
               />
             )
           }
         </div>
+        <TaskCreateModal
+            isOpen={this.state.isCreatingTask}
+            onSubmit={this.handleTaskSubmit}
+            onClose={this.handleClose}
+        />
       </div>
     );
   }
