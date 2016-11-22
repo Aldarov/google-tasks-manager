@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import {Router, Route, hashHistory} from 'react-router';
+import {Router, Route, hashHistory, IndexRedirect} from 'react-router';
 
 import SessionActions from './actions/SessionActions';
 import SessionStore from './stores/SessionStore';
@@ -20,6 +20,7 @@ function renderApp() {
   ReactDOM.render (
     <Router history={hashHistory}>
       <Route path='/' component={App} >
+        <IndexRedirect to="/login" />
         <Route path='/login' component={LoginPage}/>
         <Route component={LoggedInLayout} onEnter={requireAuth}>
           <Route path='/about' component={AboutPage} />

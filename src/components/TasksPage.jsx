@@ -86,11 +86,16 @@ const TasksPage = React.createClass({
       this.setState({ isCreatingTask : false });
   },
 
+  getTitleTaskList() {
+    const res = TaskListsStore.getList(this.props.params.id);
+    return res || '';
+  },
+
   render () {
     return (
       <div className="TasksPage">
         <div className="TasksPage__header">
-          <h2 className="TasksPage__title">Список задач</h2>
+          <h2 className="TasksPage__title">{this.getTitleTaskList().name}</h2>
           <div className="TasksPage__tools">
             <IconButton onClick={this.handleAddTask}>
               <ContentAdd/>
@@ -102,7 +107,7 @@ const TasksPage = React.createClass({
             this.state.tasks.map(task =>
               <Task
                 key={task.id}
-                text={task.text}
+                task={task}
                 isCompleted={task.isCompleted}
                 onStatusChange={this.handleStatusChange.bind(null, task.id)}
                 onUpdate={this.handleTaskUpdate.bind(null, task.id)}

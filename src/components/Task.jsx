@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
 
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
@@ -84,9 +85,16 @@ const Task = React.createClass({
           <input
             className="Task__input"
             type='text'
-            defaultValue={this.props.text}
+            defaultValue={this.props.task.text}
             ref={c => this.input = c}
             onKeyDown={this.handleKeyDown}
+          />
+          <TextField
+            hintText="Введите описание задачи"
+            multiLine={true}
+            rows={2}
+            rowsMax={10}
+            value={this.props.task.notes}
           />
           <div className="Task__toolbar">
             <div>
@@ -104,7 +112,7 @@ const Task = React.createClass({
           />
 
           <div className="Task__text" onClick={this.handleEdit}>
-            <div className="TasksPage__title">{this.props.text}</div>
+            <div className="TasksPage__title">{this.props.task.text}</div>
           </div>
 
           <IconMenu iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}>

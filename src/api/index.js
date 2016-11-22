@@ -52,10 +52,10 @@ export default {
     });
   },
 
-  insertTask({ taskListId, title }) {
+  insertTask({ taskListId, ...params }) {
     const request = gapi.client.tasks.tasks.insert({
       tasklist : taskListId,
-      title    : title
+      ...params
     });
 
     return new Promise((resolve, reject) => {

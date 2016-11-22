@@ -10,6 +10,7 @@ import ListIcon from 'material-ui/svg-icons/action/view-list';
 import HomeIcon from 'material-ui/svg-icons/action/home';
 import ExitIcon from 'material-ui/svg-icons/action/exit-to-app';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
+import FolderOpenIcon from 'material-ui/svg-icons/file/folder-open';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 import TaskListCreateModal from './TaskListCreateModal.jsx';
@@ -92,7 +93,7 @@ const TaskListsPage = React.createClass({
                   this.state.taskLists.map(list =>
                       <ListItem
                           key={list.id}
-                          leftIcon={<FolderIcon />}
+                          leftIcon={ (list.id === router.params.id) ? <FolderOpenIcon /> : <FolderIcon /> }
                           primaryText={list.name}
                           onClick={router.push.bind(null, `/lists/${list.id}`)}
                       />

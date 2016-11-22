@@ -20,6 +20,11 @@ const TaskListsStore = Object.assign({}, EventEmitter.prototype, {
     return _taskLists;
   },
 
+  getList(taskListId) {
+    const taskIndex = _taskLists.findIndex(list => list.id === taskListId);
+    return _taskLists[taskIndex];
+  },
+
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
