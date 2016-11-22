@@ -21,7 +21,9 @@ const ESC_KEY = 27;
 const Task = React.createClass({
   getInitialState: function() {
     return {
-      isEditing: false
+      isEditing: false,
+      text: this.props.task.text,
+      notes: this.props.task.notes
     };
   },
 
@@ -48,7 +50,7 @@ const Task = React.createClass({
   },
 
   focusInput() {
-    this.input.focus();
+    this.inputText.focus();
   },
 
   handleKeyDown(e) {
@@ -61,8 +63,23 @@ const Task = React.createClass({
     }
   },
 
+  handleTextChange(e) {
+    this.setState({
+      text: e.target.value
+    });
+  },
+
+  handleNotesChange(e) {
+    this.setState({
+      notes: e.target.value
+    });
+  },
+
   saveTask() {
-    this.props.onUpdate({ text: this.input.value });
+    this.props.onUpdate({
+      text: this.state.text,
+      notes: this.state.notes
+    });
 
     this.setState({ isEditing: false });
   },
@@ -82,19 +99,23 @@ const Task = React.createClass({
       this.state.isEditing
       ?
         <div className="Task editing">
-          <input
-            className="Task__input"
-            type='text'
-            defaultValue={this.props.task.text}
-            ref={c => this.input = c}
+          <TextField
+            fullWidth
+            hintText="Введите наименование задачи"
+            ref={c => this.inputText = c}
+            value={this.state.text}
+            onChange={this.handleTextChange}
             onKeyDown={this.handleKeyDown}
           />
           <TextField
+            fullWidth
+            className="Task__notes"
             hintText="Введите описание задачи"
             multiLine={true}
-            rows={2}
-            rowsMax={10}
-            value={this.props.task.notes}
+            rows={3}
+            ref={c => this.inputNotes = c}
+            value={this.state.notes}
+            onChange={this.handleNotesChange}
           />
           <div className="Task__toolbar">
             <div>

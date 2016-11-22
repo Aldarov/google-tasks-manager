@@ -63,7 +63,6 @@ const TaskCreateModal = React.createClass({
       >
         <h3 className="TaskCreateModal__modal-title">Добавить задачу</h3>
         <TextField
-          fullWidth
           ref={c => this.taskInput = c}
           value={text}
           onChange={this.handleTextChange}

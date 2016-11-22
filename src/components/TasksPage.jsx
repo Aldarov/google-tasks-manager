@@ -56,11 +56,12 @@ const TasksPage = React.createClass({
     });
   },
 
-  handleTaskUpdate(taskId, { text }) {
+  handleTaskUpdate(taskId, { text, notes }) {
     TasksActions.updateTask({
       taskListId: this.props.params.id,
       taskId: taskId,
-      text: text
+      text: text,
+      notes: notes
     });
   },
 
