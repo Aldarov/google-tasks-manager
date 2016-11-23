@@ -50,7 +50,7 @@ const TasksActions = {
       taskId: params.taskId,
       title: params.text,
       notes: params.notes,
-      due: moment(params.due).toISOString()
+      due: moment(params.due).format("YYYY-MM-DDTHH:mm:ss")+"Z"
     })
     .then(data => {
       AppDispatcher.dispatch({
@@ -72,7 +72,7 @@ const TasksActions = {
       taskListId: params.taskListId,
       title: params.text,
       notes: params.notes,
-      due: moment(params.due).toISOString()
+      due: moment(params.due).format("YYYY-MM-DDTHH:mm:ss")+"Z"
     })
     .then(data => {
       AppDispatcher.dispatch({

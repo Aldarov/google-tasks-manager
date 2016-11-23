@@ -64,12 +64,12 @@ export default {
   },
 
   updateTask({ taskListId, taskId, ...params }) {
-    console.log("index.js", {
-      tasklist : taskListId,
-      task     : taskId,
-      id       : taskId,
-      ...params
-    });
+    // console.log("index.js", {
+    //   tasklist : taskListId,
+    //   task     : taskId,
+    //   id       : taskId,
+    //   ...params
+    // });
     const request = gapi.client.tasks.tasks.update({
       tasklist : taskListId,
       task     : taskId,

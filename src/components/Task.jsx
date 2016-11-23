@@ -15,7 +15,6 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import IntlPolyfill from 'intl';
 import 'intl/locale-data/jsonp/ru-RU';
-import moment from 'moment';
 
 import './Task.scss';
 
@@ -114,6 +113,7 @@ const Task = React.createClass({
           <TextField
             fullWidth
             hintText="Введите наименование задачи"
+            floatingLabelText="Задача"
             ref={c => this.inputText = c}
             value={this.state.text}
             onChange={this.handleTextChange}
@@ -122,9 +122,10 @@ const Task = React.createClass({
           <TextField
             fullWidth
             className="Task__notes"
+            floatingLabelText="Описание задачи"
             hintText="Введите описание задачи"
             multiLine={true}
-            rows={3}
+            rows={1}
             ref={c => this.inputNotes = c}
             value={this.state.notes}
             onChange={this.handleNotesChange}
@@ -132,12 +133,14 @@ const Task = React.createClass({
           <DatePicker
             onChange={this.handleDueChange}
             value={this.state.due}
+            floatingLabelText="Срок выполнения"
             hintText="Введите срок выполнения"
             autoOk={true}
             DateTimeFormat={IntlPolyfill.DateTimeFormat}
             locale="ru-Ru"
             okLabel="Ок"
             cancelLabel="Отмена"
+            className="Task__due"
           />
           <div className="Task__toolbar">
             <div>
