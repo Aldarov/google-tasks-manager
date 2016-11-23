@@ -64,7 +64,7 @@ export default {
   },
 
   updateTask({ taskListId, taskId, ...params }) {
-    console.log({
+    console.log("index.js", {
       tasklist : taskListId,
       task     : taskId,
       id       : taskId,

@@ -56,12 +56,13 @@ const TasksPage = React.createClass({
     });
   },
 
-  handleTaskUpdate(taskId, { text, notes }) {
+  handleTaskUpdate(taskId, { text, notes, due }) {
     TasksActions.updateTask({
       taskListId: this.props.params.id,
       taskId: taskId,
       text: text,
-      notes: notes
+      notes: notes,
+      due: due
     });
   },
 
@@ -89,14 +90,19 @@ const TasksPage = React.createClass({
 
   getTitleTaskList() {
     const res = TaskListsStore.getList(this.props.params.id);
-    return res || '';
+    if (res) {
+      return res.name;
+    }
+    else {
+      return '';
+    }
   },
 
   render () {
     return (
       <div className="TasksPage">
         <div className="TasksPage__header">
-          <h2 className="TasksPage__title">{this.getTitleTaskList().name}</h2>
+          <h2 className="TasksPage__title">{this.getTitleTaskList()}</h2>
           <div className="TasksPage__tools">
             <IconButton onClick={this.handleAddTask}>
               <ContentAdd/>

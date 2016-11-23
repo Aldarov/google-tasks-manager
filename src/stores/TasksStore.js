@@ -13,7 +13,7 @@ function formatTask(data) {
     id   : data.id,
     text : data.title,
     notes : data.notes,
-    dueTime : data.due ? new Date(data.due) : '',
+    due : data.due ? new Date(data.due) : '',
     isCompleted : data.status === 'completed',
     position : data.position
   };

@@ -3,6 +3,7 @@ import React from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
 
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -12,6 +13,9 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+import IntlPolyfill from 'intl';
+import 'intl/locale-data/jsonp/ru-RU';
+import moment from 'moment';
 
 import './Task.scss';
 
@@ -23,7 +27,8 @@ const Task = React.createClass({
     return {
       isEditing: false,
       text: this.props.task.text,
-      notes: this.props.task.notes
+      notes: this.props.task.notes,
+      due: this.props.task.due
     };
   },
 
@@ -75,10 +80,17 @@ const Task = React.createClass({
     });
   },
 
+  handleDueChange(e, d) {
+    this.setState({
+      due: d
+    });
+  },
+
   saveTask() {
     this.props.onUpdate({
       text: this.state.text,
-      notes: this.state.notes
+      notes: this.state.notes,
+      due: this.state.due
     });
 
     this.setState({ isEditing: false });
@@ -116,6 +128,16 @@ const Task = React.createClass({
             ref={c => this.inputNotes = c}
             value={this.state.notes}
             onChange={this.handleNotesChange}
+          />
+          <DatePicker
+            onChange={this.handleDueChange}
+            value={this.state.due}
+            hintText="Введите срок выполнения"
+            autoOk={true}
+            DateTimeFormat={IntlPolyfill.DateTimeFormat}
+            locale="ru-Ru"
+            okLabel="Ок"
+            cancelLabel="Отмена"
           />
           <div className="Task__toolbar">
             <div>

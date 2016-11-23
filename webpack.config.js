@@ -8,6 +8,7 @@ module.exports = {
     filename: "bundle.js",
     library: "app"
   },
+  devtool: "eval",
   module:{
     loaders: [
       {

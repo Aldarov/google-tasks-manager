@@ -3,6 +3,8 @@ import AppConstants from '../constants/AppConstants';
 
 import api from '../api';
 
+import moment from 'moment';
+
 const TasksActions = {
   loadTasks(taskListId) {
     api.listTasks(taskListId)
@@ -48,7 +50,7 @@ const TasksActions = {
       taskId: params.taskId,
       title: params.text,
       notes: params.notes,
-      due: params.due
+      due: moment(params.due).toISOString()
     })
     .then(data => {
       AppDispatcher.dispatch({
@@ -70,7 +72,7 @@ const TasksActions = {
       taskListId: params.taskListId,
       title: params.text,
       notes: params.notes,
-      due: params.due
+      due: moment(params.due).toISOString()
     })
     .then(data => {
       AppDispatcher.dispatch({
