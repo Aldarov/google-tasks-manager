@@ -40,6 +40,27 @@ export default {
     });
   },
 
+  deleteTaskList({ taskListId }) {
+    const request = gapi.client.tasks.tasklists.delete({
+      tasklist: taskListId
+    });
+
+    return new Promise(function(resolve, reject) {
+      request.execute(resp => resolve(resp));
+    });
+  },
+
+  updateTaskList({ taskListId, ...params }) {
+    const request = gapi.client.tasks.tasklists.update({
+      tasklist: taskListId,
+      ...params
+    });
+
+    return new Promise(function(resolve, reject) {
+      request.execute(resp => resolve(resp));
+    });
+  },
+
   listTasks(taskListId) {
     const request = gapi.client.tasks.tasks.list({
       tasklist: taskListId

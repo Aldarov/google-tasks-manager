@@ -1,14 +1,17 @@
 import React from 'react';
 
-import TaskListsStore from '../stores/TaskListsStore';
-import TasksStore from '../stores/TasksStore';
 import TasksActions from '../actions/TasksActions';
+import TasksStore from '../stores/TasksStore';
+import TaskListsActions from '../actions/TaskListsActions';
+import TaskListsStore from '../stores/TaskListsStore';
 
 import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentRemove from 'material-ui/svg-icons/content/remove';
 
 import Task from './Task.jsx';
 import TaskCreateModal from './TaskCreateModal.jsx';
+import DialogQuestion from './helpers/DialogQuestion.jsx';
 
 import './TasksPage.scss';
 
@@ -32,6 +35,7 @@ const TasksPage = React.createClass({
 
   componentDidMount() {
     TasksStore.addChangeListener(this._onChange);
+    TaskListsStore.addDeleteTasksListListener(this._onDeleteTasksList);
   },
 
   componentWillReceiveProps(nextProps) {
@@ -42,10 +46,15 @@ const TasksPage = React.createClass({
 
   componentWillUnmount() {
     TasksStore.removeChangeListener(this._onChange);
+    TaskListsStore.removeDeleteTasksListListener(this._onDeleteTasksList);
   },
 
   _onChange() {
     this.setState(getStateFromFlux());
+  },
+
+  _onDeleteTasksList() {
+    this.props.router.push("/lists");
   },
 
   handleStatusChange(taskId, { isCompleted }) {
@@ -98,6 +107,14 @@ const TasksPage = React.createClass({
     }
   },
 
+  handleDeleteTaskList() {
+    this.refs.ques.showQuestion("Удалить текущий список задач?", () => {
+      TaskListsActions.deleteTaskList({
+        taskListId : this.props.params.id
+      });
+    })
+  },
+
   render () {
     return (
       <div className="TasksPage">
@@ -106,6 +123,9 @@ const TasksPage = React.createClass({
           <div className="TasksPage__tools">
             <IconButton onClick={this.handleAddTask}>
               <ContentAdd/>
+            </IconButton>
+            <IconButton onClick={this.handleDeleteTaskList}>
+              <ContentRemove/>
             </IconButton>
           </div>
         </div>
@@ -128,6 +148,7 @@ const TasksPage = React.createClass({
             onSubmit={this.handleTaskSubmit}
             onClose={this.handleClose}
         />
+      <DialogQuestion ref="ques" title="Внимание"/>
       </div>
     );
   }

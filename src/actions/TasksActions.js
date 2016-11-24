@@ -5,6 +5,10 @@ import api from '../api';
 
 import moment from 'moment';
 
+function DateToRFC3339(date) {
+  return moment(date).format("YYYY-MM-DDTHH:mm:ss")+"Z";
+}
+
 const TasksActions = {
   loadTasks(taskListId) {
     api.listTasks(taskListId)
@@ -50,7 +54,7 @@ const TasksActions = {
       taskId: params.taskId,
       title: params.text,
       notes: params.notes,
-      due: moment(params.due).format("YYYY-MM-DDTHH:mm:ss")+"Z"
+      due: DateToRFC3339(params.due)
     })
     .then(data => {
       AppDispatcher.dispatch({
@@ -72,7 +76,7 @@ const TasksActions = {
       taskListId: params.taskListId,
       title: params.text,
       notes: params.notes,
-      due: moment(params.due).format("YYYY-MM-DDTHH:mm:ss")+"Z"
+      due: DateToRFC3339(params.due)
     })
     .then(data => {
       AppDispatcher.dispatch({

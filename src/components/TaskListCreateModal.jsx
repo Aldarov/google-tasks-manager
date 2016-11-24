@@ -68,8 +68,8 @@ const TaskListCreateModal = React.createClass({
           ref={c => this.taskInput = c}
           value={name}
           onChange={this.handleTextChange}
-          hintText="например, посмотреть фильмы"
-          floatingLabelText='Введите имя списка задач'
+          hintText="введите, например: 'посмотреть фильмы'"
+          floatingLabelText='Наименование списка задач'
         />
       </Dialog>
     );

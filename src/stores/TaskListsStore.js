@@ -4,6 +4,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants from '../constants/AppConstants';
 
 const CHANGE_EVENT = 'change';
+const DELETE_TASKS_LIST_EVENT = 'deleteTaskList';
 
 let _taskLists = [];
 let _error = null;
@@ -35,6 +36,18 @@ const TaskListsStore = Object.assign({}, EventEmitter.prototype, {
 
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  emitDeleteTasksList() {
+    this.emit(DELETE_TASKS_LIST_EVENT);
+  },
+
+  addDeleteTasksListListener(callback) {
+    this.on(DELETE_TASKS_LIST_EVENT, callback);
+  },
+
+  removeDeleteTasksListListener(callback) {
+    this.removeListener(DELETE_TASKS_LIST_EVENT, callback);
   }
 });
 
@@ -64,6 +77,39 @@ AppDispatcher.register(action => {
     }
 
     case AppConstants.TASK_LISTS_CREATE_FAIL: {
+      _error = action.error;
+
+      TaskListsStore.emitChange();
+      break;
+    }
+
+    case AppConstants.TASK_LISTS_UPDATE_SUCCESS: {
+      const updatedTaskListIndex =
+        _taskLists.findIndex(t => t.id === action.taskListId);
+      _taskLists[updatedTaskListIndex] = formatTaskList(action.taskList);
+
+      TaskListsStore.emitChange();
+      break;
+    }
+
+    case AppConstants.TASK_LISTS_UPDATE_FAIL: {
+      _error = action.error;
+
+      TaskListsStore.emitChange();
+      break;
+    }
+
+    case AppConstants.TASK_LISTS_DELETE_SUCCESS: {
+      const deletedTaskListIndex =
+        _taskLists.findIndex(t => t.id === action.taskListId);
+      _taskLists.splice(deletedTaskListIndex, 1);
+
+      TaskListsStore.emitChange();
+      TaskListsStore.emitDeleteTasksList();
+      break;
+    }
+
+    case AppConstants.TASK_LISTS_DELETE_FAIL: {
       _error = action.error;
 
       TaskListsStore.emitChange();
