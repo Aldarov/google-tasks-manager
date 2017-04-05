@@ -2,5 +2,4 @@
 
 1. npm install
 2. npm run devserver
-
-http://localhost:8080/
+3. show: http://localhost:8080/
